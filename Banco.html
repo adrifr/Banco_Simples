@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banco Simples</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <h2>🏦 Banco Simples</h2>
+
+    <div class="box">
+        <h3>Cadstrar conta</h3>
+        <input type="text" id="nomeCadastro" placeholder="Nome">
+        <button onclick="cadastrarConta()">Cadastrar</button>
+    </div>
+
+    <div class="box">
+        <h3>Depósito</h3>
+        <input type="text" id="nomeDeposito" placeholder="Nome">
+        <input type="number" id="valorDeposto" placeholder="Valor">
+        <button onclick="depositar()">Depósitar</button>
+    </div>
+
+    <div class="box">
+        <h3>Saque</h3>
+        <input type="text" id="nomeSaque" placeholder="Nome">
+        <input type="number" id="valorSaque" placeholder="Valor">
+        <button onclick="sacar()">Sacar</button>
+    </div>
+
+    <div class="box">
+        <h3>Consultar Saldo</h3>
+        <input type="text" id="nomeSaldo" placeholder="Nome">
+        <button onclick="consultarSaldo()">Consultar Saldo</button>
+
+    </div>
+
+    <p id="mensagem"></p>
+
+    <script>
+        let contas = [];
+
+        function mostrarMensagem(msg) {
+            document.getElementById("mensagem").innerText = msg;
+
+        }
+
+        function buscarConta(Nome) {
+            return contas.find(conta => nome.conta === nome);
+        }
+
+        function cadastrarConta() {
+            let nome = document.getElementById("nomeCadastro").value;
+             
+            if (!nome) {
+                mostrarMensagem("Digite um nome valido")
+                return
+            }
+
+            if (buscarConta(nome)) {
+                mostrarMensagem("Conta Já existe")
+                return
+            }
+
+            contas.push({ nome: nome, saldo: 0 })
+            mostrarMensagem(`Conta Criada Para ${nome}`)
+
+        }
+
+        function depositar() {
+            let nome = document.getElementById("nomeDeposito").value
+            let valor = parseFloat(document.getElementById("valorDeposito")).value
+
+            let conta = buscarConta(nome)
+
+            if (!conta) {
+                mostrarMensagem("Conta não encontrada")
+                return
+            }
+
+            if (valor <= 0 || isNaN(valor)) {
+                mostrarMensagem("Valor Invalido.")
+                return
+            }
+
+            conta.saldo += valor
+            mostrarMensagem(`Deposito realizado. Saldo atual é R$${conta.saldo}`)
+        }
+
+        function sacar() {
+            let nome = document.getElementById("nomeSaque").value
+            let valor = parseFloat(document.getElementById("valorsaque")).value
+
+            let conta = buscarConta(nome)
+
+            if (!conta) {
+                mostrarMensagem("Conta não encontrada")
+                return
+            }
+
+            if (valor > conta.saldo) {
+                mostrarMensagem("Saldo insuficiente!")
+                return
+            }
+
+            conta.saldo -= valor
+            mostrarMensagem(`Saque realizado. Saldo atual R$${conta.valor}`)
+        }
+
+        function consultarSaldo() {
+            let nome = document.getElementById("nomeSaldo").value
+            let conta = buscarConta(nome)
+
+            if (!conta) {
+                mostrarMensagem("Conta não encontrada.")
+                return
+            }
+
+            mostrarMensagem(`Saldo atual de ${nome} : R$${conta.saldo}`)
+        }
+    </script>
+ 
+    
+</body>
+</html>
